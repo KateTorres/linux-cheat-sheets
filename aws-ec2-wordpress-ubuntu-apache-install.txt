@@ -1,0 +1,72 @@
+sudo apt install apache2
+
+sudo apt install php libapache2-mod-php php-mysql
+
+sudo apt install mysql-server
+
+sudo apt install unzip
+
+sudo mysql -u root
+ALTER USER 'root'@localhost IDENTIFIED WITH mysql_native_password by 'xxxxxxxxx';
+
+CREATE USER 'wp_user'@localhost IDENTIFIED BY 'xxxxxxxxx';
+
+CREATE DATABASE wp;
+
+GRANT ALL PRIVILEGES ON wp.* TO 'wp_user'@localhost;
+
+## copy link from https://wordpress.org/download/#download-install
+
+
+cd /tmp
+wget https://wordpress.org/latest.zip
+unzip latest.zip
+sudo mv wordpress/ /var/www/html/
+
+## in the browser
+http://xx.xxx.x.xx/wordpress
+
+Database name : wp
+Username : wp_user
+Password : xxxxxxxxx
+Database Host : localhost
+Table Prefix : wp_
+
+## on server
+cd /etc/apache2/sites-available/
+sudo nano 000-default.conf
+
+## add wordpress to the DocumentRoot and add domain name (after Route53 connection is created and tested)
+
+        ServerName xxxxxxxxx.com
+        ServerAlias www.xxxxxxxx.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html/wordpress
+
+## restart server
+sudo systemctl restart apache2
+
+sudo apt install certbot python3-certbot-apache
+sudo apt-get update
+sudo sertbot --apache
+
+## log in mysql and search content
+
+sudo mysql -u 'root' -p 
+SHOW DATABASES;
+USE my_database;
+SHOW TABLES;
+
+SELECT * FROM wp_options WHERE option_name = 'siteurl' OR option_name
+= 'home';
+
+UPDATE wp_options SET option_value = 'https://xxxxxxx.com' WHERE option_name = 'siteurl';
+UPDATE wp_options SET option_value = 'https://xxxxxxx.com' WHERE option_name = 'home';
+
+## Make writable directory 
+/var/www/html/wordpress/wp-content$ mkdir uploads                                            
+
+sudo chown -R www-data:www-data /var/www/html/wordpress/wp-content/uploads/
+
+sudo chmod -R 755 /var/www/html/wordpress/wp-content/uploads/

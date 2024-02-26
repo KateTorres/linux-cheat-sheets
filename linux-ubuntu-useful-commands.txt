@@ -1,0 +1,11 @@
+lsblk ## list all volumes
+
+AWS EBS Volumes: They usually show up as xvda, xvdb, etc., or nvme if you're using a Nitro-based instance. 
+
+Instance Store Volumes: These might be labeled as ephemeral or similar. They're directly attached to the host machine and don't persist beyond the life of the instance.
+
+df -h ## show disk space usage in a human-readable format for all mounted filesystems.
+
+which **** ### search for an executable
+
+sudo find / -type f -name "filename.txt" ### find a file

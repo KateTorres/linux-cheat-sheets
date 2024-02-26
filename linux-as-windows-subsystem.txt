@@ -1,0 +1,33 @@
+wsl2 - Windows Subsystem for Linux 2 (find in Windows store)
+
+Ubuntu 22.04.03 (or LTS)
+
+Install Windows Terminal
+
+First time in Linux: 
+sudo apt update
+sudo apt full-upgrade
+
+sudo apt update
+sudo apt install apache2
+sudo systemctl status apache2
+sudo ufw allow 'Apache Full'
+
+In Browser type http://localhost/
+
+Wondows is gogging port 80
+
+http://localhost:8181
+
+sudo apt install net-tools
+check that no program is using this netstat -tulpnport: 
+
+
+On Apache find directory /etc/apache2/
+edit file   ports.conf (use sudo)
+
+replace where it says listen from port 80 to port 8181
+
+restart Apache: sudo systemctl restart apache2
+
+In Browser type http://localhost:8181 
